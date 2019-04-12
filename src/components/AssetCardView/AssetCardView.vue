@@ -4,8 +4,8 @@
         <md-card-header>
           <md-checkbox
             class="md-checkbox"
-            v-model="isChecked"
-            :click="selectId(asset.id)">
+            v-model="selectedIds"
+            :value="asset.id">
           </md-checkbox>
           <md-card-media>
             <img class="card__thumbnail" :src="thumbnail" alt="assetType">
@@ -38,11 +38,7 @@ import helpImage from '@/assets/help.png';
 export default {
   props: {
     asset: Object,
-  },
-  data() {
-    return {
-      isChecked: false,
-    };
+    selectedIds: Array,
   },
   computed: {
     thumbnail() {
@@ -62,11 +58,6 @@ export default {
     formattedCheckDate() {
       const { checkDate } = this.asset;
       return format(checkDate, 'YYYY-MM-DD');
-    },
-  },
-  methods: {
-    selectId(selectedAssetId) {
-      this.$emit('mergeSelectedId', selectedAssetId, this.isChecked);
     },
   },
 };

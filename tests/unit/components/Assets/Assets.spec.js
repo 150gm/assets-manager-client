@@ -7,7 +7,7 @@ describe('@/components/Assets/Assets', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Assets, { stubs: ['md-autocomplete'] });
+    wrapper = shallowMount(Assets, { stubs: ['md-autocomplete', 'md-button'] });
     wrapper.setData({
       assets: [
         {
@@ -72,25 +72,6 @@ describe('@/components/Assets/Assets', () => {
         checkDate: new Date(2019, 1, 20),
         user: 'Iaan',
       });
-    });
-  });
-
-  describe('event', () => {
-    it('should append selectedAssetId, when isChecked is true', () => {
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '1', true);
-      expect(wrapper.vm.selectedIds).toEqual(['1']);
-
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '2', true);
-      expect(wrapper.vm.selectedIds).toEqual(['1', '2']);
-    });
-
-    it('should remove selectedAssetId, when isChecked is false', () => {
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '1', true);
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '2', true);
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '3', true);
-      wrapper.findAll(AssetCardView).wrappers[0].vm.$emit('mergeSelectedId', '2', false);
-
-      expect(wrapper.vm.selectedIds).toEqual(['1', '3']);
     });
   });
 });

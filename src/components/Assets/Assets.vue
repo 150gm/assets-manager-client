@@ -4,15 +4,24 @@
         v-model="selectedProject"
         :md-options="projects"
         md-layout="box"
-        md-dense>
+        md-dense
+        value="project">
         <label>Select Project</label>
       </md-autocomplete>
+
+      <div class="actions">
+        <md-button
+          class="md-raised md-primary"
+          @click="updateStatusToCheck">CHECK</md-button>
+      </div>
 
       <div class="md-layout md-gutter md-alignment-center">
         <div v-for="(asset, index) in assets"
              :key="index"
               class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-          <AssetCardView :asset="asset" @mergeSelectedId="applySelectedId" />
+          <AssetCardView
+            :asset="asset"
+            :selected-ids="selectedIds"/>
         </div>
       </div>
     </div>
@@ -67,17 +76,17 @@ export default {
     };
   },
   methods: {
-    applySelectedId(assetId, isChecked) {
-      if (isChecked) {
-        this.selectedIds.push(assetId);
-      } else {
-        const index = this.selectedIds.findIndex(id => id === assetId);
-        if (index === -1) {
-          return;
-        }
-        this.selectedIds.splice(index, 1);
-      }
+    updateStatusToCheck() {
+      console.log(this.selectedIds);
+      alert(`Preparing... selectedIds: ${this.selectedIds}`);
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .actions {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+</style>

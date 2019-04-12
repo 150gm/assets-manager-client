@@ -16,6 +16,7 @@ describe('@/components/AssetCardView/AssetCardView', () => {
   beforeEach(() => {
     wrapper = shallowMount(AssetCardView, {
       propsData: {
+        selectedIds: [],
         asset: {
           id: 1,
           type: 'iMac',
@@ -75,7 +76,6 @@ describe('@/components/AssetCardView/AssetCardView', () => {
 
   describe('event', () => {
     describe('checkbox', () => {
-      const spyEmit = jest.fn();
       let mountedWrapper;
 
       beforeEach(() => {
@@ -87,25 +87,19 @@ describe('@/components/AssetCardView/AssetCardView', () => {
             },
           },
         });
-        mountedWrapper.vm.$emit = spyEmit;
       });
 
-      afterEach(() => {
-        mountedWrapper.vm.$emit.mockClear();
-      });
-
-      it('should emit parent listener "selectedAssetId", when isChecked is true', () => {
+      it('should include selectedIds, when checkbox is checked', () => {
         mountedWrapper.find('input[type="checkbox"]').trigger('click');
 
-        expect(spyEmit).toBeCalledWith('mergeSelectedId', '1', true);
+        expect(mountedWrapper.vm.selectedIds).toEqual('1');
       });
 
       it('should not emit parent listener "selectedAssetId", when isChecked is false', () => {
-        mountedWrapper.setData({ isChecked: true });
-
+        mountedWrapper.find('input[type="checkbox"]').trigger('click');
         mountedWrapper.find('input[type="checkbox"]').trigger('click');
 
-        expect(spyEmit).toBeCalledWith('mergeSelectedId', '1', false);
+        expect(mountedWrapper.vm.selectedIds).toBeFalsy();
       });
     });
   });
